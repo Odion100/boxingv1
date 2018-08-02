@@ -1,0 +1,435 @@
+#side-panel{
+	background: #d4d3d3;
+    background: #ececec;
+    width: 31%;
+    height: 99%;
+    position: absolute;
+    right: 1px;
+    top: 0;
+    box-shadow: -2px 0px 1px #c0c0c0;
+    border-left: 1px solid #777777;
+    background: #f6f6f6;
+}
+div#box-picker .box-head button.expand-btn.btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+div#box-picker {
+    position: absolute;    
+    height: 90%;
+    background: white;
+    top: 40px;
+    background: aliceblue;
+    background: linear-gradient(to bottom, white 0%, #7cc2ff 47%, white 100%);
+}
+
+div#box-picker div.section {
+    height: 100%;
+    display: inline-block;
+    float: left;
+}
+
+div#box-picker div.box-picker-main{
+/*	width: 90%;
+	min-width: 322px;*/
+    position: relative;
+}
+
+div#box-picker div.box-picker-side{
+	width: 26%;
+	min-width: 113px;
+	overflow: auto;
+}
+
+div.existing-box.box-indicator i.clear-filter{
+    font-size: 16px;
+     color: #d95555; 
+    font-weight: bold;
+    float: right;
+    margin-right: 8px;
+    width: 25px;
+    text-align: center;
+    text-shadow: 0px 0px 0px black;
+}
+div.existing-box.box-indicator i.clear-filter:hover{
+    color:red;
+}
+
+div.existing-box.box-indicator span.filter-selection{
+    font-weight: bold;
+    color: #2196F3;
+    text-decoration: underline;
+}
+div.existing-box.box-indicator span.filter-selection:hover{
+    color:#45b98a;
+}
+
+/*box-type label {
+    background: #d9f3ff;
+    padding: 4px;
+    border: 1px solid #b3d6e6;
+    border-radius: 6px;
+    margin: 6px 1px;
+    font-size: 25px;
+    width: 44%;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+}*/
+
+.box-indicator span {
+    padding: 3px;
+    display: inline-block;    
+    font-weight: bold;
+    color: #30262b;
+}
+
+div.box-picker-main.section .box-number {
+    border: 1px solid #9e9d9d;
+    height: 27px;
+    padding: 3px;
+    width: 213px;
+    font-weight: 100;
+    color: #0b56dc;
+    border-radius: 4px;
+}
+div.box-picker-main.section input.box-number {
+	font-size: 25px;
+}
+
+div.box-picker-main.section div#info-display * {
+    font-family: "Century Gothic", CenturyGothic, "Apple Gothic", sans-serif;
+    font-size: 19px;
+    padding: 3px;
+    text-align: center;
+}
+
+div.box-data button.pick-button {
+    color: #986d2a;
+    height: 33px;
+}
+
+div.pick-frm {
+    border-bottom: 1px solid gainsboro;
+    border-top: 1px solid gainsboro;
+    overflow: hidden;
+    position: relative;   
+    background: whitesmoke; 
+}
+
+.pickfrm-section {
+    display: inline-block;
+    margin: 5px 12px;
+    vertical-align: top;
+}
+
+div.box-data label {
+    font-weight: bold;
+    font-size: 25px;
+    width: 100%;
+}
+.box-small.Box-View div.box-head span {
+    margin: 0;
+    display: inline-block;
+}
+.box-small.Box-View div.box-head span.id {
+    width: 148px;
+}
+.box-small.Box-View div.box-head span.Box {
+    width: 70px;
+    background: #ffe4b2;
+    text-align: center;
+}
+.box-small.Box-View div.box-head span.Session {
+    width: 108px;    
+}
+.box-small.Box-View div.box-head span.Vendor {
+    width: 82px;
+}
+.box-small.Box-View div.box-head span.Ship {
+    width: 97px;
+    background: #ffe4b2;
+    text-align: center;
+}
+
+div.box-data input.txb {
+    width: 74px;
+    margin-left: 8px;
+    height: 25px;
+    float: right;
+}
+div.ship-msg {
+    display: inline-block;
+    width: 453px;
+    border: 1px solid gainsboro;
+    margin: 0 11px;
+    font-size: 21px;
+    position: absolute;
+    top: 2px;
+    padding: 0 8px
+}
+.inline, .inline * {
+	display: inline-block;	
+	vertical-align: middle;
+}
+
+div.inline{
+	text-align: left;
+}
+
+div.box-contents {
+/*	text-align: center;*/
+    margin: 4px 0
+}
+
+div.box-item {
+    display: inline-block;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #032463;
+    width: 99%;
+    border: 1px solid gray;
+    border-top: none;
+    box-shadow: 1px 2px 3px #d0d0d0;
+}
+
+.box-item div div > span {
+    display: inline-block;
+    margin: 1px 4%;
+    /*width: 22%;*/
+}
+
+div.box-small{
+    border: 1px solid #828282;
+    min-height: 22px;    
+    box-shadow: 1px 0px 3px #d0d0d0;
+}
+
+div.current-box button.delete-btn {
+	cursor: pointer;
+    float: right;
+    margin: 1px 1px;
+    border: 1px solid #ff3c3c;
+    color: white;
+    background: #ef6c6c;
+    outline: none;
+ }
+
+input.date-picker {
+    width: 27px;
+    height: 24px;
+    cursor: pointer;
+    display: inline-block;
+    opacity: 0;
+}
+
+button.ui-datepicker-trigger{
+	float: right;
+    display: inline-block;
+    background: url("/images/cal.png");
+    background-position: 0px -2px;
+    margin: 3px;
+    border: none;
+    width: 32px;
+    height: 30px;
+    cursor: pointer;
+}
+
+button#clear-btn {
+    padding: 3px 6px;
+    position: relative;
+    top: -2px;
+    margin: 4px;
+}
+
+/*------------------------------*/
+div#item-search-section input {
+    width: 242px;
+    margin: 0px 10px;
+}
+
+div#item-search-section div.inline {
+    width: auto;
+}
+
+div#item-search-section {
+    /* background: wheat; */
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid gainsboro;
+}
+
+.row.small-section div.pickfrm-section {
+    vertical-align: top;
+}
+#picked-boxes{
+	height: 88%;
+    overflow: auto;
+    background: white;
+    border: 1px solid white;
+    padding: 0px 2px;
+}
+
+button.button.download-btn {
+    color: #14af62;
+    float: right;
+    padding: 6px 3px;
+    margin: 4px;
+}
+button.button.download-btn.label-btn {
+    color: #14379c;
+}
+
+.tbl-head.box-head td.box-head, .box-head {
+    background: #ffe4b2;
+    position: relative; 
+    cursor: pointer;   
+}
+div#box-picker .box-head {
+    padding: 0 0 0 6px;
+}
+span.order-number {
+    float: left;
+    margin: 0;
+    font-size: 21px;
+    position: absolute;
+    left: 1px;
+    top: -2px;
+    font-weight: bold;
+    color: #045075;
+    font-size: 27px;
+}
+
+div.box-small div.box-head span.order-number {
+    font-size: 14px;
+}
+
+
+div#kit-label.show-false {
+    height: 22px;
+}
+#picked-boxes .Item-View {
+     border: none; 
+}
+#box-picker .Item-View span {
+    width: 20.7%;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+    border-left: 1px solid gainsboro;
+}
+#box-picker .Item-View span.smaller {
+    width: 11%;
+}
+
+img.Box-View {
+    width: 20px;
+    background: wheat;
+    box-shadow: 1px 1px 1px gray;
+}
+
+
+button.button.delete-box-btn:hover {
+    border: 1px solid #F44336;
+    color: #F44336;
+    background: aliceblue;
+}
+button.button.delete-box-btn {
+    border: none;
+    padding: 1px 5px;
+    color: #6d6a6d;
+    background: none;
+    float: right;
+}
+
+i.trash.icon:hover {
+    color: #ce5028;
+    /* font-size: 20px; */
+}
+
+i.trash.icon {
+    cursor: pointer;
+    font-size: 20px;
+    float: right;    
+}
+
+i.sort.numeric.icon {
+    font-size: 16px;
+}
+
+i.sort.numeric.descending.icon:hover {
+    color: #E65100;
+}
+
+i.sort.numeric.descending.icon.reverse-true {
+    color: #E65100;
+}
+
+i.sort.numeric.ascending.icon:hover {
+    color: #28c328;
+}
+
+i.sort.numeric.ascending.icon.reverse-false {
+    color: #28c328;
+}
+
+i.unlock.icon {
+    color: #2dab32;
+}
+
+.label-icon.btn{
+    width: 78px;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    color: #4f7080;
+}
+
+.label-icon.btn.set-true{
+    color: #ff7b72;
+}
+
+.label-icon.btn.set-false{
+    color: #4f7080;
+}
+
+.set-true{
+    color: #ff4e43;
+}
+
+.set-false{
+    color: #001bee;
+}
+
+.label-icon.btn:hover{
+    box-shadow: 0px 0px 2px #000000;
+    border-radius: 1px;
+    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+}
+button.reprint-options.button{
+    padding: 3px 0px;
+    color: #14af62;
+    width: 46px;
+    position: relative;
+    top: -2px;
+}
+
+  
+/*input[type='date']{position:relative;}
+::-webkit-datetime-edit, ::-webkit-calendar-picker-indicator{position:absolute;}
+::-webkit-clear-button{right:1.54em;}
+::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+::-webkit-calendar-picker-indicator{right:0; padding:.539em .34em;}
+::-webkit-clear-button{display: none;}
+
+.place-holder{
+	margin-left: 8px;
+	float: right;
+	visibility: hidden;
+}*/

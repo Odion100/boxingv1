@@ -1,0 +1,25 @@
+{
+  "name": "order_processing_system",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "odion edwards",
+  "license": "ISC",
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "body-parser": "^1.15.2",
+    "csvtojson": "^1.1.0",
+    "express": "^4.13.4",
+    "json2xls": "^0.1.2",
+    "jsontoxml": "0.0.11",
+    "moment": "^2.17.1",
+    "mongojs": "^2.4.0",
+    "multer": "^1.2.0",
+    "ng-file-upload": "^12.2.9",
+    "ng-infinite-scroll": "^1.3.0",
+    "xlsx-to-json": "^0.2.4"
+  }
+}

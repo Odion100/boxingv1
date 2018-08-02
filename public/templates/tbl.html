@@ -1,0 +1,209 @@
+
+<div class="main" style="position: relative;">	
+	<div class="overlay" ng-show="tbl.showFilterBack"  ng-click="tbl.hideAllFilters()"></div>
+	<div class="overlay" ng-show="tbl.showMenuBack" ng-click="tbl.showMenuBack = false;tbl.toggleMenuOptions()" style="z-index: 102"></div>
+	<div class="overlay" ng-show="tbl.dataEditor.show" ng-click="tbl.dataEditor.show = false;" style="z-index: 100;opacity: .3;"></div>
+	<div id="loading-msg" ng-show="!tbl.ready">
+		<span style="font-size: 15px;">Retrieving Data...</span>
+	</div>
+	<div class="tbl-editor" ng-show="tbl.dataEditor.show">
+		<div class="editor-msg" ng-show="tbl.dataEditor.loading" style="top:{{tbl.dataEditor.loading_msg_top}};">
+			<span>{{tbl.dataEditor.loading_msg}}...</span>
+			<img src="/images/gears.gif" class="loading" style="width: 30px;position: relative;top: 4px;">
+		</div>
+		<div class="data-container tbl-scrollable" style="max-height: 552px;;">
+			<div ng-repeat="data in tbl.dataEditor._data" class="editor-row">
+				<span style="float: left;color: #104158;font-weight: 600;" ng-show="tbl.dataEditor.show_count">{{$index + 1}}.</span>
+				<div ng-repeat="pName in data.headers">
+					<div ng-if="data[pName].useInput" class="editor-data">
+						<label class="{{::data[pName].class}}">
+							<span>{{::data[pName].caption}}:</span>
+							<input ng-if="!(data[pName].type === 'textarea')" type={{::data[pName].type}} name="" ng-model="data[pName].value" max="{{::data[pName].max}}" min="{{::data[pName].min}}" style="{{::data[pName].style}}" placeholder="{{::data[pName].placeholder}}" ng-readonly={{::data[pName].readOnly}} ng-change="data[pName].onChange(data[pName], data, tbl.dataEditor)">			
+							<textarea ng-if="data[pName].type === 'textarea'" ng-model="data[pName].value" rows="10" cols="30" style="{{::data[pName].style}}" placeholder="{{::data[pName].placeholder}}" spellcheck="false"></textarea>		
+						</label>
+					</div>	
+					<div ng-if="!data[pName].useInput" class="editor-data info">
+						<label>
+							<span>{{::data[pName].caption}}:</span>
+						</label>
+						<span class="data" ng-bind-html="::data[pName].value | $$unsafe"></span>
+					</div>
+				</div>							
+			</div>
+		</div>
+		<div class="submit">
+			<div class="caption-container">
+				<span ng-bind-html="tbl.dataEditor.cap | $$unsafe"></span>
+			</div>
+			<div class="button-container">				
+				<button class="button" ng-click="tbl.dataEditor.submit()">Submit</button>	
+			</div>			
+		</div>
+	</div>	
+	<div class="outer-section" style="border: 1px solid #d0d0d0;">
+		<div class="row-section" style="border: 1px solid #f7f7f7;border-bottom: 1px solid #b9b9b9;border-left: none;background: #f1efef;position: relative;">
+			<div class="inner-section">
+				<label>
+					<span ng-click="test()">Search: </span>
+					<div class="txb-container" style="display: inline-block;position: relative;">
+						<input type="text" class="txb" ng-model="tbl.quickSearch" ng-change="tbl.quickFilter()" ng-model-options="{ debounce: 300 }">
+						<span class="txb-clear btn" ng-show="tbl.quickSearch != ''" ng-click="tbl.quickSearch = ''; tbl.filter()">X</span>							
+					</div>
+				</label>
+			</div>
+			<div class="inner-section">				
+				<label class="btn" style="margin: 0 15px" ng-repeat="viewMode in ::tbl.viewModes"><span>{{::viewMode.caption}}</span>
+					<input type="radio" ng-model="tbl.viewMode" name="viewMode" ng-value="viewMode.query" ng-click="viewMode.clickAction()">											
+				</label>			
+				<img src="/images/loading.gif" class="loading" style="width: 18px;" ng-show="!tbl.ready">
+			</div>
+			
+			<div class="tbl-menu">
+				<div ng-repeat="menu in tbl.menus" style="position: relative;" ng-switch on="menu.type">
+					<div  ng-switch-when="dropdown">
+						<button class="button" ng-click="tbl.toggleMenuOptions(menu)">
+							<i class="caret down icon"></i>
+							<i class="{{menu.icon}}"></i>						
+						</button>
+						<div class="popup-menu" ng-show="menu.showOptions">
+							<div ng-repeat="option in ::menu.options" class="option btn file-input" ng-click="option.clickAction()">
+								<span>{{::option.caption}}</span>
+								<i class="{{::option.icon}}" ng-show="option.icon" style="float: right;"></i>
+
+								<i class="icons {{::option.iconCombo.class}}" ng-show="option.iconCombo" style="float: right;">
+								  	<i class="{{::option.iconCombo.icon1}}"></i>
+								  	<i class="{{::option.iconCombo.icon2}}"></i>
+								</i>
+								<input style="float: right;" type="checkbox" name="" ng-model="option.value" ng-show="option.type === 'checkbox'">
+								<input class="file-input" type="file" name={{::option.name}} onchange="angular.element(this).scope().tbl.uploadFile(this)" ng-show="option.type === 'file'">					
+							</div>
+						</div>
+					</div>
+					<div  ng-switch-when="template" >
+						<div ng-include="menu.template"></div>
+					</div>
+				</div>
+				<!-- <button class="button refresh" ng-click="test()"><i class="refresh icon"></i></button> -->
+			</div>
+		</div>
+		<div>
+			<table class="tbl-rec-flat">
+				<tbody>
+					<tr>
+						<td style="height: 52px;">
+							<label>
+	                        	<input type="checkbox" ng-model="tbl.selectAll" ng-click="tbl.selectAllClick()">
+	                        </label>
+	                        <div ng-repeat="header in tbl.headers" style="position: relative;display: inline-block; height: 100%;" ng-show="header.includeColumn">
+								<div class="{{header.pName}} header cell btn" ng-click="tbl.sort(header.pName)">
+									<i ng-show="header.pName === tbl.sortFields[0] && tbl.sortReverse"  class="caret down icon"></i>
+									<i ng-show="header.pName === tbl.sortFields[0] && !tbl.sortReverse"  class="caret up icon"></i>
+									<span>{{::header.fieldName}}</span>								
+									<i class="filter icon my-green btn show-{{header.showFilter}} filtering-{{header.filterValue1 !== '' || header.filterValue2 !== '' || header.isBlank || header.notBlank}}" ng-click="$event.stopPropagation();tbl.toggleFilter(header)" ng-show="tbl.ready"></i>																																	
+								</div>
+								<div class="popup-menu" ng-show="header.showFilter" ng-switch on="header.data_type">
+									<i ng-click="tbl.clearFilter(header)" class="filter icon my-red clear btn"></i>
+									<div ng-switch-when="string">
+										<label class="filter-input">
+											<span>Contains: </span>
+											<input id="{{header.pName}}-filter1" ng-keydown="tbl.filterKeydown($event)" ng-model="header.filterValue1" class="txb" type="text" name="">
+										</label>	
+										<label class="filter-input">
+											<span>Doesn't Contain: </span>
+											<input id="{{header.pName}}-filter2" ng-keydown="tbl.filterKeydown($event)" ng-model="header.filterValue2" class="txb" type="text" name="">
+										</label>
+										<div>
+											<label>
+												<span>is blank</span>
+												<input type="checkbox" name="" ng-keydown="tbl.filterKeydown($event)" ng-model="header.isBlank">
+											</label>	
+											<label>
+												<span>is not blank</span>
+												<input type="checkbox" name="" ng-keydown="tbl.filterKeydown($event)" ng-model="header.notBlank">
+											</label>	
+										</div>
+									</div>
+									
+									<div ng-switch-when="number">
+										<label class="filter-input">
+											<span>From: </span>
+											<input id="{{header.pName}}-filter1" ng-keydown="tbl.filterKeydown($event)" class="number-date" ng-model="header.filterValue1" class="txb" type="number" name="">											
+										</label>
+										<label class="filter-input">
+											<span>To: </span>
+											<input id="{{header.pName}}-filter2" ng-keydown="tbl.filterKeydown($event)" class="number-date" ng-model="header.filterValue2" class="txb" type="number" name="">											
+										</label>
+									</div>																		
+									<div ng-switch-when="date">
+										<label class="filter-input">
+											<span>From: </span>
+											<input id="{{header.pName}}-filter1" ng-keydown="tbl.filterKeydown($event)" class="number-date" ng-model="header.filterValue1" class="txb" ui-date name="">											
+										</label>
+										<label class="filter-input">
+											<span>To: </span>
+											<input id="{{header.pName}}-filter2" ng-keydown="tbl.filterKeydown($event)" class="number-date" ng-model="header.filterValue2" class="txb" ui-date name="">											
+										</label>
+									</div>									
+								</div>
+							</div>								
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="tbl-scrollable" style="border: none;background: white;">
+			<table class="tbl-rec-flat body" cellspacing="1" style="background: gainsboro" infinite-scroll="tbl.increaseScrollLimit()" scroll-reset="tbl.resetScrollLimit()" scroll-reset-precentage="0.1" infinite-scroll-parent="true">				
+				<tr ng-repeat="data in tbl.filteredData | orderBy:tbl.sortFields:tbl.sortReverse | limitTo:tbl.scrollLimit">
+					<td class="selected-{{data.selected}}" ng-click="tbl.selectOne(data)">
+						<label>
+                        	<input type="checkbox" ng-model="data.selected" ng-click="data.selected = !data.selected">
+                        </label>					                                             
+                        <div ng-repeat="header in tbl.headers" class="{{::header.pName}} cell hide-{{!header.includeColumn}}">
+                        	<span ng-bind-html="tbl.initData(data[header.pName], header, data) | $$unsafe"></span>
+                        </div>
+                        <!-- <i class="edit icon line-editor btn" ng-click="$event.stopPropagation()"></i> -->
+					</td>												
+				</tr>
+			</table>
+		</div>		
+	</div>
+	<div class="footers">	
+		<div class="container">	
+			<div class="cell" style="margin-right: 51px;" ng-show="!tbl.ready"><span>Table Loading... </span><img src="/images/loading.gif" class="loading" style="width: 18px;"> </div>
+			<div class="cell" ng-repeat="footer in tbl.footer" ng-show="tbl.ready">
+				<span><strong>{{footer.caption}}:</strong> {{footer.value(tbl)}}</span>
+	        </div>  
+        </div>               		                     		                       	
+	</div>
+	
+</div>
+
+<style type="text/css">
+	div.outer-section, div.footers {
+		width:{{tbl.width}}px;
+		min-width: 1620px;
+	}
+	div.footers {
+		width:{{tbl.width}}px;	
+	}
+	table.tbl-rec-flat td div.cell{
+		width:{{tbl.cellWidth}}px;
+		min-width: 82px
+	}
+	.tbl-scrollable{
+		max-height: {{tbl.height}}px;
+	}
+	i.edit.icon.line-editor {
+	    position: absolute;
+	}	
+	div.tbl-editor > div.editor-msg{
+		position: absolute;
+	    background: #ffffff;
+	    border: 1px solid #918c8c;
+	    line-height: 22px;
+	    padding: 0px 3px;
+	    font-weight: bold;
+	    color: #4CAF50;
+	    z-index: 1;
+	}
+</style>

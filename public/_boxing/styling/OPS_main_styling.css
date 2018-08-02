@@ -1,0 +1,352 @@
+body {
+    margin: 0;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+    font-size: 11pt;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 26px;
+    background: whitesmoke;
+}
+
+.hide-true{
+    visibility: hidden;
+}
+
+input[type='checkbox']{
+    cursor: pointer;
+}
+.button {
+	padding: 5px 8px;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid #999;
+    outline: none;
+    text-shadow: 1px 1px #fff;
+    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);	
+    font-weight: 700;
+}
+
+.button:hover {
+    border-color: #464642;
+}
+
+.button:active ,a:active{
+    transform: translateY(1px);
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+.btn:active{
+    transform: translateY(1px);
+}
+.btn {
+    cursor: pointer;
+}
+input.txb  {    
+    border: 1px solid #9e9d9d;
+    height: 20px;
+    text-indent: 3px;
+    width: 300px;    
+    box-shadow: 0px 0px 1px #a0a0a0;
+}
+
+div#main {
+    width: 65.7%;
+    min-width: 660px;
+}
+
+table.tbl-rec-flat {
+    width: 100%;
+}
+
+table.tbl-rec-flat td{
+	background: white;
+	cursor: pointer;
+}
+table.tbl-rec-flat td.selected-true {
+    font-weight: bold;
+    background: #d2ebff;
+    background: linear-gradient(to top, #d7e9f9, #edf7ff);
+}
+
+table.tbl-rec-flat td div{
+	display: inline-block;
+    vertical-align: top ;
+    text-align: center;
+    /*white-space: nowrap;*/
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /*line-height: 20px;*/
+    width: 115px;   
+    height: 29px; 
+}
+
+.tbl-head {
+    width: 100%;
+    border: 1px solid #777777;
+    border-bottom: navajowhite;
+    box-shadow: 1px 0px 1px #a2a2a2;
+}
+
+.tbl-scrollable {
+    overflow: auto;
+    max-height: 275px;
+    width: 100%;
+    border: 1px solid #868181;
+    background: #e8e8e8;
+    box-shadow: 1px 1px 1px #a2a2a2;
+}
+
+.order-lookup {
+    margin: 19px 31px;
+    display: inline-block;
+}
+
+.tbl-highlight {
+    background: #aedebb;
+    color: #c71645;
+    border-radius: 34px;
+    font-weight: bold;
+}
+
+.barcode {
+    width: 170px;
+    height: 20px;
+    background-position: -18px -9px;
+    position: relative;
+    right: -214px;
+    margin: 1px 0px 0px 0px;
+}
+.barcode-small{
+    width: 70px;
+    height: 20px;
+    background-position: -9px -9px;
+    position: relative;
+    left: -4px;
+    top: 1px;
+}
+
+.expand-btn {
+    width: 18px;
+    height: 19px;
+    background: #a6d9ff;
+    border-radius: 2px;
+    float: right;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 0 1px 0;
+}
+.expand-btn:after{
+    content: '+';
+}
+
+.tbl2 table.tbl-rec-flat td div {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 20px;
+    width: 13.94%;
+    min-width: 54px;
+}
+
+.tbl2 {
+    width: 825px;
+    margin:8px;
+    float: left;
+    box-shadow: 3px 1px 3px #a2a2a2;
+}
+
+span.delete-item-btn:hover {
+    background: #ffc8c8;
+    color: #ff4949;
+}
+span.delete-item-btn {
+    padding: 0px 8px;
+    color: #6d6a6d;
+    float: right;
+    line-height: 20px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input#box-search-txb {
+    width: 160px;
+}
+
+div#msg-back {
+    background: #7cc5ff;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.5;
+    /* display: none;*/
+}
+
+div#msg-box {
+    position: absolute;
+    left: 25%;
+    top: 10%;
+    background: white;
+    padding: 10px;
+    width: 439px;
+    border: 1px solid #92b4c3;
+    border-radius: 6px;
+    z-index: 1;
+}
+
+div#msg-box div.msg-display {
+    padding: 7px;
+    border: 1px solid gainsboro;
+    border-radius: 3px;
+}
+
+.msg-prompt{
+    margin: 0 0 9px 0;
+}
+
+.msg-options button {
+    float: right;
+    margin: 0 9px;
+    min-width: 76px;
+}
+
+.msg-options {
+    display: inline-block;
+    width: 100%;
+}
+/*-------------------------------------------*/
+
+
+table.tbl-rec-flat td div.description {
+    width: 385px;
+}
+
+table.tbl-rec-flat td div.upcs {
+    width: 191px;    
+    white-space: normal;
+}
+/*------------------------------------------*/
+
+div#kit-label{
+    width: 418px;
+    /*height: 212px;*/
+    float: left;
+    border: 1px solid gray;
+    box-shadow: 1px 1px 1px #a2a2a2; 
+    background: white;
+}
+.label-options label {
+    margin: 0 3px;
+    font-weight: bold;
+}
+div#kit-label div.label-details {
+    margin: 12px;
+}
+
+.label-details span {
+    width: 37px;
+    display: inline-block;
+}
+
+.label-details div {
+    margin: 4px;
+}
+
+.file-button::-webkit-file-upload-button {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 0;
+}
+
+.file-button::before {
+  /*content: 'Replace All Orders';  */
+    display: inline-block;
+    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+}
+.file-button{
+    color: #119a8d;
+    outline: none;
+}
+.file-button:hover::before {
+    border-color: black;
+}
+.file-button:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+    transform: translateY(1px);
+}
+
+.client-info {
+    position: absolute;
+    display: inline-block;
+    left: 900px;
+}
+
+.client-info label {
+    display: inline-block;
+}
+
+.stacked.sub-section {
+    margin: 5px;
+}
+/*.delete-true {
+    background: red;
+    color: red;
+    font-weight: bold;
+}*/
+input#replace-orders::before{
+    content: 'Replace All Orders';
+}
+input#insert-orders::before{
+    content: 'Upload New Orders';
+}
+input#insert-products::before{
+    content: 'Upload New Products';
+}
+input#replace-products::before{
+    content: 'Replace All Products';
+}
+input#delete-boxes::before{
+    content: 'Upload Box Delete Template';
+}
+div ::-webkit-scrollbar {
+    width: 10px;
+} /* this targets the default scrollbar (compulsory) */
+
+div ::-webkit-scrollbar-track {
+      background-color: white;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ 
+div ::-webkit-scrollbar-thumb {
+     background: linear-gradient(to top, #85a59b, #b6d2c5);
+   /* background: #85a59b;
+    background: #93b3a9;*/
+    background: linear-gradient(to top, #dcdcdc, #aba8a8);
+    border: 1px solid white;
+} /* this will style the thumb, ignoring the track */
+ 
+div ::-webkit-scrollbar-button {
+    /*background-color: #7c2929;*/
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+ 
+div ::-webkit-scrollbar-corner {
+    /*background-color: black;*/
+} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */

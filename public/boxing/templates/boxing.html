@@ -1,0 +1,357 @@
+<div>
+	<div ng-include="'boxing/templates/user_login.html'"></div>
+	<audio id="positive_ding">
+		<source src="boxing/audio/positive_ding.mp3"></source>
+	</audio>
+	<msgbox></msgbox>
+	<!-- <img src="boxing/images/logo mongo.png" style="width: 48px;position: absolute;left: 1240px"> -->
+	<a href="http://localhost:1100/#/label-printing/setup" target="_blank" style="position: absolute;left: 90%; z-index:10;color: #473333;text-decoration: none;font-size: 19px;background: #f6f6f6;">
+		<i class="print icon"></i>
+	</a>
+	
+	<div id="main">
+		<div class="order-lookup">
+			<label>
+				<span>UPC/SKU/ASIN:</span>
+				<input id="searchtxb" class="txb" type="text" name="upcTxb" ng-keydown="osh.searchTxbKeydown($event, osh.searchText)" ng-model="osh.searchText" style="margin: 0 14px;">				
+			</label>
+			<div class="order-info show-{{boxPicker.currentOrder.units_confirmed > 0}}">
+				<i class="info circle icon btn" style="color: #009688;"></i>
+				<span>{{boxPicker.currentOrder.title}}</span> 
+				<span class="set-{{boxPicker.currentOrder.is_set}}">({{boxPicker.currentOrder.sku_x}})</span>
+			</div>
+		</div>
+		
+		<div class="tbl" style="height: 427px; margin:0 8px; position: relative;">
+			<div style="position: absolute;right: 0px;top: -26px;">								
+				<label style="margin: 0 25px; cursor: pointer;">
+					<span style="font-weight: bold;">Filter Boxes on Selection</span>
+					<input type="checkbox" name="" style="position: relative;top: 2px;" ng-model="boxPicker.autoFilter" ng-click="boxPicker.state.save();">
+				</label>			
+			</div>
+			<div class="tbl-head">
+				<table class="tbl-rec-flat" cellspacing="1">
+					<tbody>
+						<tr>
+							<td>
+								<label><input type="checkbox" style="visibility: hidden"></label>
+								<div ng-repeat="header in osh.headers"><span>{{header.fieldName}}</span></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>			
+
+			<div class="tbl-scrollable" style="max-height:max-height: 275px;">
+				
+				<table class="tbl-rec-flat" cellspacing="1">				
+					<tr ng-repeat="order in osh.orders | orderBy:'order_date':false" >
+
+						<td class="line-item selected-{{order.selected}} match-box-{{boxPicker.currentBox.fulfillment_center === order.fulfillment_center && boxPicker.currentBox.vendor_code === order.vendor_code}} outdated-{{order.outdated}}" ng-click="boxPicker.setCurrentOrder(order)">
+							<label>
+	                        	<input type="checkbox" ng-model="order.selected">
+	                        </label>
+
+	                        <div ng-repeat="header in osh.headers">
+	                        	<span ng-bind-html="header.processData(order[header.pName], order) | $$unsafe"></span>
+	                        </div>
+	                        <div ng-show="order.labels_required" ng-click="$event.stopPropagation();labelPrinter.quickPrint(order)" class="label-icon btn set-{{order.is_set}}">
+	                        	<i class="tags icon" ng-show="order.is_set"></i>
+	                        	<i class="tag icon" ng-show="!order.is_set"></i>
+	                        	<span style="font-weight: bolder;padding: 0px 2px;font-size: 18px;position: relative;right: 5px;">{{order.labels_needed}}</span>	                        											
+	                        </div>	                        
+						</td>												
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="pick-frm">
+			<div>
+				<div class="row box-data">
+					<div class="pickfrm-section">
+						<div class="stacked sub-section">
+							<label>
+								<span ng-show="!boxPicker.multiBox">Units</span>
+								<span ng-show="boxPicker.multiBox">Units</span>
+								<input id="unitsTxb" type="number" max="{{boxPicker.currentOrder.in_stock_units/boxPicker.boxes}}"  min="1" class="txb" ng-model="boxPicker.pickedUnits" ng-keydown="boxPicker.submitItemKeydown($event, true)">
+							</label>
+						</div>
+						<div class="stacked sub-section">
+							<label ng-show="boxPicker.multiBox">
+								<span>Boxes:</span>
+								<input id="box-count" type="number" class="txb" max="{{boxPicker.currentOrder.in_stock_units/boxPicker.pickedUnits}}" min="2" ng-model="boxPicker.boxes" ng-keydown="boxPicker.submitItemKeydown($event, false)">					
+							</label>
+						</div>
+					</div>
+					<div class="pickfrm-section">
+						<label>
+							<span style="font-weight: normal;font-size: 20px;cursor: pointer;">multi-box</span>
+							<input type="checkbox" ng-model="boxPicker.multiBox" ng-change="boxPicker.multiBoxChange()">
+						</label>
+					</div>
+					<div class="pickfrm-section" ng-show="boxPicker.multiBox || (boxPicker.boxes === NaN || boxPicker.pickedUnits === NaN)">					
+						<label>
+							<span>
+								Total Units: <span ng-show="boxPicker.boxes != NaN && boxPicker.pickedUnits != NaN">{{boxPicker.boxes * boxPicker.pickedUnits}}</span>
+								<span ng-show="boxPicker.boxes === NaN || boxPicker.pickedUnits === NaN " style="color: red;font-weight: bold;">Over Limit</span>
+							</span>							
+						</label>
+					</div>
+					<div class="pickfrm-section" ng-hide="boxPicker.multiBox">
+						<button class="button pick-button" ng-click="boxPicker.submitItem(true)">SHIP <i class="unlock icon"></i></button>
+					</div>
+					<div class="pickfrm-section" ng-hide="boxPicker.currentBox._id">
+						<button class="button pick-button" ng-click="boxPicker.submitItem(false)">SHIP <i class="lock icon"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="pick-frm">
+			<button class="expand-btn btn expand-{{productEditor.show}}" ng-click="productEditor.show = !productEditor.show"></button>
+			<div ng-show="productEditor.show">
+				<div class="row small-section" style="border-bottom: 1px solid gainsboro;">
+					<div class="pickfrm-section">
+						<label>
+							<span ng-show="productEditor.searchType === 'pf_skus'">UPC/SKU:</span>
+							<span ng-show="productEditor.searchType === 'asinData'">ASIN:</span>
+							<input ng-keydown="productEditor.searchTxbKeydown($event)" type="text" class="txb" ng-model="productEditor.searchText">							
+						</label>
+						<span>(Product Search)</span>
+					</div>
+					<div class="pickfrm-section">
+						<span style="font-weight:bold;">Search For:</span>
+						<label class="btn" style="margin: 0 15px"><span>PF SKU</span>					
+							<input ng-click="productEditor.toggleHeaders()" type="radio" ng-model="productEditor.searchType" name="prodSearch" value="pf_skus" checked>							
+						</label>
+						<label class="btn" style="margin: 0 15px"><span>ASIN</span>					
+							<input ng-click="productEditor.toggleHeaders()" type="radio" ng-model="productEditor.searchType" name="prodSearch" value="asinData">							
+						</label>
+					</div>
+				</div>
+				<div>
+					<table class="tbl-rec-flat">
+						<tbody>
+							<tr>
+								<td>
+									<div ng-repeat="header in productEditor.headers" class="{{header.pName}}"><span>{{header.fieldName}}</span></div>
+									<div ng-show="productEditor.searchType === 'asinData'"><span>Labels Required</span></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="tbl-scrollable" style="max-height: 222px;border: none;" >
+					<table class="tbl-rec-flat"  cellspacing="1">
+						<tr ng-repeat="product in productEditor.products" ng-click="selectProduct(product)">
+							<td class="products">
+								<div ng-repeat="header in productEditor.headers" class="{{header.pName}}">
+									<span ng-bind-html="header.processData(product[header.pName], product) | $$unsafe" ></span>
+								</div>
+								<div ng-show="productEditor.searchType === 'pf_skus'" style="width: 247px;">
+									ADD UPC: <input type="text" ng-model="product.new_upc">
+								</div>
+								<button ng-show="productEditor.searchType === 'pf_skus'" class="button" ng-click="productEditor.addUPC_msg(product)">Add</button>
+								<div ng-show="productEditor.searchType === 'asinData'">
+									<span ng-click="productEditor.toggleLabelsRequired(product)" class="btn" style="color: blue;text-decoration: underline;">{{product.labels_required}}</span>
+								</div> 
+								<button ng-show="productEditor.searchType === 'asinData'" class="button" ng-click="labelPrinter.setLable(product)">Reprint</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>	
+	</div>
+
+	<div class="tbl2">
+		<div class="tbl-head box-head">
+			<table class="tbl-rec-flat" cellspacing="1">
+				<thead>
+					<th>
+						<div class="existing-box box-indicator">
+							<span ng-hide="boxPicker.currentBox.boxContents.length == 0" class="order-number">{{boxPicker.currentBox.fulfillment_center}}</span>
+							<span ng-show="boxPicker.currentBox.boxContents.length == 0" style="color: red;position: absolute;left: 1px;font-size: 25px;"><strong>EMPTY BOX</strong></span>
+							 
+							<label>
+								<span ng-hide="boxPicker.currentBox.boxContents.length == 0" style="font-size: 25px">Current Box</span>								
+								<div class="txb-container">
+									<input id="box-search-txb" type="text" class="box-number txb" style="position: relative;top: -2px;" ng-model="boxPicker.currentBox.box_id" ng-keydown="boxPicker.boxSearchKeydown($event, boxPicker.currentBox.box_id)">
+									<span class="txb-clear btn" ng-click="boxPicker.currentBox = {}; boxPicker.state.save();" ng-show="boxPicker.currentBox._id">X</span>									
+								</div>
+							</label>
+							<!-- <button  class="button" id="clear-btn" >x</button>  -->
+							<span ng-hide="boxPicker.currentBox._id" style="font-size: 18px;">(scan box label)</span>
+							<span ng-show="boxPicker.currentBox._id" style="font-size: 21px;"><strong>Box# {{boxPicker.currentBox.boxNumber}}</strong></span>
+							<span ng-show="boxPicker.currentBox._id" style="font-size: 15px;position: relative;top: -2px;"><strong>session: {{boxPicker.currentBox.session}}</strong></span>
+							<i ng-click="pickedBoxes.deleteCurrentBox(boxPicker.currentBox)" ng-show="boxPicker.currentBox._id" class="trash icon btn"></i>							
+						</div>
+					</th>					
+				</thead>
+				<tbody>
+					<tr>
+						<td class="box-head">
+							<button ng-click="labelPrinter.printBoxLabels([boxPicker.currentBox])" class="button download-btn label-btn" ng-show="boxPicker.currentBox._id">Box Label</button>
+							<button ng-click="labelPrinter.printAmznLabel([boxPicker.currentBox])" class="button download-btn label-btn" ng-show="boxPicker.currentBox._id">Amzn Label</button>
+							<div><span>Amazon PO</span></div>
+							<div ng-repeat="header in boxPicker.boxHeaders"><span>{{header.fieldName}}</span></div>							
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div ng-hide="boxPicker.currentBox.boxContents.length == 0" class="tbl-scrollable">
+			<table class="tbl-rec-flat" cellspacing="1">
+				<tbody>
+					<tr ng-repeat="item in boxPicker.currentBox.boxContents">
+						<td>
+							<div><span>{{item.amazon_po}}</span></div>
+							<div ng-repeat="header in boxPicker.boxHeaders">
+								<span ng-bind-html="header.processData(item[header.pName], item) | $$unsafe"></span>
+							</div>
+							
+								<span class="btn delete-item-btn" ng-click="boxPicker.undoItem(boxPicker.currentBox, item)">x</span>
+		                    
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div id="kit-label">
+		<div>
+			<div class="label-details">
+				<div><label><span>SKU:</span><input ng-model="labelPrinter.label.fields.SKU" class="txb"  type="text"></label></div>
+    			<div><label><span>ASIN:</span><input ng-model="labelPrinter.label.fields.SKUBARCODE" class="txb" type="text"></label></div>
+    			<div><label><span>TITLE:</span><input ng-model="labelPrinter.label.fields.DESCRIPTION" class="txb" type="text"></label></div>
+			</div>
+			<div class="label-options">
+				<div style="margin: auto;width: 100%;padding: 12px 0;">
+					<label>
+						<span>Labels Needed:</span>
+						<input ng-model="labelPrinter.labels_needed" class="txb" type="number" ng-readonly="true" style="width: 58px;margin-left: 8px;height: 25px;">
+					</label>
+		    		<label>
+		    			<span>Qty to Print:</span>
+		    			<input ng-model="labelPrinter.label.copies" class="txb" type="number" min="0" max="{{labelPrinter.labels_needed}}" style="width: 58px;margin-left: 8px;height: 25px;">
+		    		</label>
+		    		<button ng-click="labelPrinter.printKitLabel(labelPrinter.label)" style="float: none;" class="button download-btn label-btn">Print Labels</button>
+		    	</div>
+			</div>
+			<div class="label-options" style="border-top: 1px solid gainsboro;background: whitesmoke;">
+				<div style="margin: auto;width: 364px;padding: 4px 0;">
+					<label>
+						<span>(if needed) Re-Print:</span>
+						<input class="txb" type="number" min="0" style="width: 58px;margin-left: 8px;height: 25px;" ng-model="labelPrinter.reprint_qty">
+					</label>
+					<button style="float: none;" class="button download-btn label-btn" ng-click="labelPrinter.reprint(labelPrinter.label)">Reprint Labels</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="side-panel">
+		<div id="box-picker">
+			<div class="box-picker-main section">
+				<div class="existing-box box-indicator" style="display:inline-block; width:100%;">	
+					<i class="cube icon" style="color:#135271" ng-click="test()"></i><span style="font-size: 14px;">Showing {{pickedBoxes.filteredBoxes.length}} of {{pickedBoxes.boxes.length}} Shipping From {{stateParams.location}}</span>
+					<span style="font-weight: bold;color: #ff2727;" ng-show="pickedBoxes.sessionStatus === 'closed'">(Closed Sessions)</span>
+					<span style="font-weight: bold;color: #009688;" ng-show="pickedBoxes.selectionFilter">(filtering selection)</span>
+
+					<!-- <span class="clear-filter btn" ng-click="pickedBoxes.clearFilter()">X</span> -->			
+					<i class="clear-filter btn filter icon" ng-click="pickedBoxes.clearFilter()"></i>
+					<div style="display:inline-block; width:100%; position: relative;">
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">BOX ID:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.box_id" type="text" class="txb" style="width:139px;"></label></div>
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">Vendor Code:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.vendor_code" type="text" class="txb" style="width:70px;"></label></div>
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">Ship To:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.fulfillment_center" type="text" class="txb" style="width:70px;"></label></div>
+					</div>
+					<div style="display:inline-block; width:100%; position: relative;">					
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">PF SKU:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.pf_sku" type="text" class="txb" style="width:139px;"></label></div>
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">ASIN:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.asin" type="text" class="txb" style="width:139px;"></label></div>
+						<!-- <span class="btn filter-selection" ng-click="pickedBoxes.filterSelection()">Selection</span> -->
+
+						<!-- <button class="button download-btn" ng-click="test()" style="margin: 0 10px 0 0;">Download</button>
+						 -->
+						 <div class="special-filters" style="display: inline-block;text-shadow: 1px 1px 1px #534848">
+							<i class="checkmark icon btn" ng-click="pickedBoxes.filterSelection()" style="color: #757272;"></i>
+						 	<i class="lock icon btn" ng-click="pickedBoxes.filterOpen(false)"></i>
+						 	<i class="unlock icon btn" ng-click="pickedBoxes.filterOpen(true)"></i>
+						 	<span class="btn" style="font-weight: bold;color: #d95555" ng-click="pickedBoxes.filterEmpty()">EMPTY</span>
+						 </div>
+						 <span class="btn" ng-click="pickedBoxes.showAdvanceFilters = !pickedBoxes.showAdvanceFilters">...</span>
+					</div>
+					<div ng-show="pickedBoxes.showAdvanceFilters">						
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">Amazon PO:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.amazon_po" type="text" class="txb" style="width:139px;"></label></div>						
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">Session ID:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.session_id" type="text" class="txb" style="width:139px;"></label></div>
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">Session:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.session" type="text" class="txb" style="width:70px;"></label></div>
+						<div style="display:inline-block;"><label><span style="font-size:16px;font-weight: 500;">User:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.user" type="text" class="txb" style="width:70px;"></label></div>
+						<div style="display:inline-block;">
+							<label><span style="font-size:16px;font-weight: 500;">Box# Range From:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.box1" type="number" min="0" class="txb" style="width:70px;"></label>
+							<label><span style="font-size:16px;font-weight: 500;">To:</span><input ng-change="pickedBoxes.filter()" ng-model="pickedBoxes.filters.box2" type="number" min="0" class="txb" style="width:70px;"></label>
+						</div>
+					</div>					
+				</div>
+				<div class="box-options" style="border-bottom: 1px solid #d4d3d3;">
+					<label><input ng-click="pickedBoxes.selectAllBoxes()" ng-model="pickedBoxes.selectAll" type="checkbox" name=""></label>					
+					<i ng-init="reverse=true" class="sort numeric ascending icon btn reverse-{{reverse}}" ng-click="reverse=false"></i>					
+					<button ng-click="pickedBoxes.showAllContents()" class="expand-btn btn expand-{{pickedBoxes.showAll}}" style="margin: 4px 12px 0 0;box-shadow: 0 0 3px #000000;"></button>
+
+
+					<i class="sort numeric descending icon btn reverse-{{reverse}}" ng-click="reverse=true"></i>
+					<div style="display: inline-block;float: right;position: relative;">
+						
+						<!-- <i class="tag icon btn" style="color: #4f7080;font-size: 18px;text-shadow: 1px 0px 0px black;" ng-click="pickedBoxes.showReprintOptions = !pickedBoxes.showReprintOptions"></i> -->
+						<button ng-click="pickedBoxes.reprintLabels('Box ID')" class="reprint-options button">Box</button>
+						<button ng-click="pickedBoxes.reprintLabels('Amazon')" class="reprint-options button">Amzn</button>
+						<i class="trash icon btn" ng-click="pickedBoxes.undoBoxes()"></i>
+
+						<!-- <div  ng-show="pickedBoxes.showReprintOptions">
+							<div class="btn" ng-click="pickedBoxes.reprintLabels('Box ID')"><span>Box Label</span> <i class="print icon" style="float: right;color: #473333;"></i></div>
+							<div class="btn" ng-click="pickedBoxes.reprintLabels('Amazon')"><span>Amzn Label</span> <i class="print icon" style="float: right;color: #473333;"></i></div>
+						</div> -->
+					</div>
+				</div>
+				<div id="picked-boxes">					
+				<!--  -->
+					<div ng-init="box.selected=false;" infinite-scroll="pickedBoxes.increaseScrollLimit()" scroll-reset="pickedBoxes.resetScrollLimit()" scroll-reset-precentage="0.1" infinite-scroll-parent="true">
+						<div class="box-contents" ng-repeat="box in pickedBoxes.filteredBoxes | orderBy:'box_id':reverse | limitTo:pickedBoxes.scrollLimit">
+							<div class="box-small Box-View">
+								<div class="box-head btn" ng-click="box.selected=!box.selected">
+									<label><input ng-click="box.selected=!box.selected" ng-model="box.selected" type="checkbox" name=""></label>
+									<span class="id hide-{{box.boxContents.length === 0}}">
+										<strong>id: </strong><a ng-click="boxPicker.boxSearchKeydown({which:13}, box.box_id);$event.stopPropagation()" style="text-decoration:underline;color:#68a1ea;cursor:pointer">{{box.box_id}}</a> 
+										<div style="display: inline-block;">
+											<i class="lock icon" ng-show="!box.open"></i>
+											<i class="unlock icon" ng-show="box.open"></i>
+										</div>
+									</span>
+
+									<span ng-show="box.boxContents.length === 0" style="color: red;position: absolute;font-weight:bold;width:auto;position: absolute;left: 63px;">EMPTY</span>
+									<span class="Box"><strong>Box# </strong>{{box.boxNumber}}</span>
+									<span class="Session"><strong>Session:</strong> {{box.session}}</span>
+									<span class="Vendor"><strong>VC:</strong> {{box.vendor_code}}</span>
+									<span class="Ship"><strong>Ship To:</strong> {{box.fulfillment_center}}</span>									
+									<button class="expand-btn btn expand-{{box.show}}" ng-click="box.show = !box.show;;$event.stopPropagation()"></button>
+								</div>
+							</div>						
+							<div class="box-item" ng-show="box.show">
+								<div ng-repeat="item in box.boxContents">
+									<div ng-repeat="header in boxPicker.boxHeaders" style="display:inline;">
+										<span>
+											<strong>{{header.fieldName}}: </strong><span ng-bind-html="header.processData(	item[header.pName], item) | $$unsafe"></span>
+										</span>
+									</div>	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+	
+	
+</div>

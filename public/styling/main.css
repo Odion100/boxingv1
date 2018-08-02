@@ -1,0 +1,260 @@
+body {
+    margin: 0;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+    font-size: 11pt;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 26px;
+    background: whitesmoke;
+    background: url("background.jpg");
+    /*background: #eaeaea;*/
+}
+label span {
+    font-weight: bold;
+}
+.nav-btn.btn > a:active {
+    background: none;
+}
+
+div.txb-container span.txb-clear{
+    position: absolute;
+    top: 6px;
+    right: 3px; 
+    color: #ffffff;
+    background: gainsboro;
+    border-radius: 25px;
+    padding: 0px 5px;
+    line-height: 16px;    
+    font-weight: 100;
+}
+div.txb-container span.txb-clear:hover{
+    color: #ff0000;
+}
+
+div.txb-container{
+    display: inline-block;
+    position: relative;
+}
+input.txb {
+    border: 1px solid #9e9d9d;
+    height: 20px;
+    text-indent: 3px;    
+    box-shadow: 0px 0px 1px #a0a0a0;
+}
+
+select.txb{
+    border: 1px solid #9e9d9d;
+    height: 27px;
+    text-indent: 3px;
+    box-shadow: 0px 0px 1px #a0a0a0;
+    width: 201px;
+    cursor: pointer;
+    margin: 0 8px 0 0px;
+}
+
+.tbl-scrollable {
+    overflow: auto;
+    width: 100%;
+}
+.overlay{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 100;
+    cursor: pointer;
+    background: #ffffff;
+    opacity: .3;
+    
+}
+
+input[type='checkbox']{
+    cursor: pointer;
+}
+.button {
+	padding: 5px 8px;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid #999;
+    outline: none;
+    text-shadow: 1px 1px #fff;
+    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);	
+    font-weight: 700;
+}
+
+.button:hover {
+    border-color: #464642;
+}
+.button:focus {
+    outline: 1px solid #a6d9ff;
+}
+
+.button:active ,a:active{
+    transform: translateY(1px);
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+.btn:active{
+    transform: translateY(1px);
+}
+.btn {
+    cursor: pointer;
+}
+div.file-input{
+    position: relative;
+}
+div.file-input input[type="file"]{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    opacity: 0;
+    background: gainsboro;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 0px;
+    cursor: pointer;
+}
+
+.inner-section {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.row-section {
+    padding: 8px;
+}
+
+div.nav-section {
+    /* background: gainsboro; */
+    vertical-align: middle;
+    padding: 23px;
+    height: 32px;    
+}
+
+div.nav-section input{
+    width: 201px;
+}
+
+div.nav-section > div {
+    float: right;
+    
+}
+div.nav-section label{
+    margin: 0 1px;
+}
+
+div.nav-btn a {
+    text-decoration: none;
+    text-shadow: 1px 1px #fff;
+    margin: 0 11px;
+    color: #000000;
+    line-height: 19px;
+    padding: 4px;
+    /*color: dimgrey;*/
+    font-weight: 100;
+}
+
+.nav-btn.btn > a.on-page-true {
+    color: #3fb33f;
+    font-weight: bold;
+    text-shadow: 0px 0px 0px black;
+}
+.nav-btn.btn > a:hover {
+    color: #3fb33f;    
+}
+
+div#nav-btn-container {
+    float: left;
+}
+div#nav-btn-container > div {
+    display: inline-block;
+}
+
+i.checkmark.icon.exists-true{
+    color: #5ec75e;    
+}
+i.checkmark.icon.exists-false{
+    color: #e44444;
+}
+i.linkify.icon, i.unlinkify.icon {
+    font-size: 16px;
+    font-weight: 500;
+    color: #567995;
+}
+i.icons.session-icon i.icon.icon1 {
+    font-size: 17px;
+    margin: 3px 1px;
+    color: #135271;
+}
+i.icons.session-icon i.icon.icon2 {
+    font-size: 11px;
+}
+
+i.icons.reports-tbl i.corner.write.icon.icon2 {
+    font-size: 10px;
+    top: 4px;
+    color: black;
+}
+i.icons.reports-tbl  i.file.text.outline.icon1 {
+    font-size: 17px;
+}
+i.play.icon {
+    color: #07998b;
+}
+i.icons.reports-tbl {
+    color: #5f431a;
+}
+i.icons.reports-tbl i.corner.add.icon.icon2 {
+    font-size: 10px;
+}
+i.trash.icon {
+    font-size: 19px;
+    color: #8b8985;
+}
+
+i.file.text.icon.edi {
+    color: brown;
+}
+
+div ::-webkit-scrollbar {
+    width: 12px;
+} /* this targets the default scrollbar (compulsory) */
+
+div ::-webkit-scrollbar-track {
+      background-color: white;
+      border: 1px solid #f1f1f1;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ 
+div ::-webkit-scrollbar-thumb {
+     background: linear-gradient(to top, #85a59b, #b6d2c5);
+   /* background: #85a59b;
+    background: #93b3a9;*/
+    background: linear-gradient(to top, #dcdcdc, #aba8a8);
+    border: 1px solid white;
+    
+} /* this will style the thumb, ignoring the track */
+ 
+div ::-webkit-scrollbar-button {
+    /*background-color: #7c2929;*/
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+ 
+div ::-webkit-scrollbar-corner {
+    /*background-color: black;*/
+} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+
+div#loading-msg {
+    position: absolute;
+    left: 50%;
+    top: -69px;
+    z-index: 200;
+    background: white;
+    border: 1px solid #b2b2b2;
+    box-shadow: 2px 2px 5px #726363;
+    padding: 4px 47px;
+    font-weight: bold;
+    font-size: 17px;
+    color: #009688;    
+}

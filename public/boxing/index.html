@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+	<head>
+		<link rel="stylesheet" type="text/css" href="boxing/styling/box-picker-styling.css">
+		<link rel="stylesheet" type="text/css" href="boxing/styling/OPS_main_styling.css">
+		<link rel="stylesheet" type="text/css" href="styling/semantic-ui-icon/icon.min.css">
+		<link rel="icon" type="image/png" href="images/logo mongo.png" sizes="20x20" />
+		<title>Boxing-app</title>
+	</head>
+	<body>		
+		<div ui-view></div>
+        <div id="barcode" style="position:absolute;top: 0;right: 0;z-index: -1;"></div>        
+	</body>
+	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="ui-router.js"></script>
+
+    <script type="text/javascript" src="boxing/app-config.js"></script>
+    <script type="text/javascript" src="boxing/controllers/boxing.js"></script>
+    <script type="text/javascript" src="boxing/controllers/user-config.js"></script>
+
+    <script type="text/javascript" src="controllers/ng-infinite-scroll.js"></script>
+    <script type="text/javascript" src="boxing/controllers/pdf417/bcmath-min.js"></script>
+    <script type="text/javascript" src="boxing/controllers/pdf417/pdf417.js"></script>
+
+    <script type="text/javascript" src="bower_components/moment/moment.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+
+	<script type="text/javascript" src="controllers/tasks.js"></script>
+	<script type="text/javascript" src="controllers/_client.js"></script>
+	<script type="text/javascript" src="controllers/$$OPS.js"></script>
+	<script type="text/javascript" src="controllers/$$msgbox.js"></script>
+   <link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
+</html>

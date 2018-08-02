@@ -1,0 +1,162 @@
+
+/*-------------------Orders-----------------------------*/
+{
+	id:"",
+	asin:"",
+	amazon_po:"",
+	title:"",
+	cost:0.00,
+	quantity_confirmed:0,
+	earliest_ship_date:Date,
+	latest_ship_date:Date,
+	expected_ship_date:Date,
+	availablity_status:"",
+	vendor_code:"",
+	fulfillment_center:"",
+	order_date:Date, //use this field to create the po to so report ()
+	//when chosing to cancel order line choose the line that has the smallest value
+	//
+
+	unconfirmed_eaches:0, //qunatity of items on POs that have not been confirmed (i.e. unconfirmed special orders)
+	//initial_in_stock_eaches:0, //tdoing units here because the user can indicate eaches in the template for 
+	linked_po_numbers:[123456, 098765], //an array of po numbers
+
+	pending_eaches:{sku:0}, //the actual sku as the key and the number of eaches as the value i.e., {THRNW0082:8}
+	in_stock_eaches:0,
+	in_stock_eaches:0.0,
+	in_job_eaches:0.0,
+	direct_boxing_eaches:0.0,
+	boxed_eaches:0.0,
+	canceled_eaches:0,
+	canceled_eaches:0.0
+
+}
+
+/*-------------------Unscheduled Receipts-----------------------------*/
+{
+	id:"",
+	receipt_number:"",
+	receipt_date:Date,
+	po_number:"",
+	vendor:"",
+	items_received:[
+		{
+			pf_sku:"",
+			total_eaches_recieved:0,
+			order_allocation:[
+				{
+					order_line_id:"",
+					total_eaches_allocated:0;
+				}
+
+			],
+		}
+	]
+
+}
+
+/*-------------------Active Work-----------------------------*/
+
+{
+	id:"",
+	job_number:"",
+	Job_comment:"",
+	line_instruction:"",
+	assignee:"",
+	type:"",
+	created_date:Date,
+	expected_completion_date:Date,
+	date_completed:Date,
+	items_on_job:{
+		unscheduled_receipts_id:"",
+		order_line_id:"",
+		units:0,
+	}
+}
+
+/*-------------------Boxes-----------------------------*/
+{
+	"id":"", //unique id
+	"session_id":"",//identifies a group of boxes being picked togther
+	"box_number":"",//count of boxes per order number for a session
+	"created_date": null,//Date
+	"session_complete" :false,
+
+
+	"box_contents":[//list of items inside the box
+		{
+			"asin":"",
+			"units":"",
+			"order_line_id":"",//
+			"active_work_id":"",						
+		}
+	]
+}
+/*-------------------asin DATA-----------------------------*/
+{
+	_id:"",// asin + vendor_code unique
+	asin:"",
+	vendor_code: "",
+	case_quantity:0,
+	lables_required:false,
+	prep_instructions:"",
+	image_url:"",
+	sku_multiple:[
+		{
+			sku:"",
+			multiple:1,
+			master_sku:"",//
+		}
+	]
+}
+
+/*-------------------PF SKU-----------------------------*/
+{
+	sku:"",
+	title:"",
+	upc:"",
+	keywords:[""], //an array of strings
+	weight:0.0;
+
+	vendorData[
+		{
+			purchasing_to_sellable_calc:0;
+		}
+	]
+}
+
+//each weeks ordres will have nad
+
+
+
+//-------------------------------for app---------------------------------
+/*Urgent notifications chesks will include:
+	1. ASINs Missing Data
+	2. Note enough eaches on po to fill ordres
+	
+*/
+//-------------------------------for app---------------------------------
+//-------------------------------for app---------------------------------
+
+//-------------------------------notifications---------------------------------
+//created on the fly when page is reloaded and then periodically updated/recreated
+
+{
+	urgentAlerts:[
+		//a list of messages created on the fly from the urgentAlertsCheck fn
+	]
+	nutrualAlerts:[
+		//a list of messages created on the fly from the nutrualAlertsCheck fn
+	]
+}
+
+
+
+//-------------------------------Stored Views---------------------------------
+//created on the fly when page is reloaded and then periodically updated/recreated
+
+[
+	{
+		//header config data
+	}
+]

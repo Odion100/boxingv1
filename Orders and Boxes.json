@@ -1,0 +1,41 @@
+//------------------------------------------Orders------------------------------------
+
+{
+	"id":"",								//Order Line ID						
+	"asin":"",								//amazon Purchase Order Number	
+	"amazon_po":"",							//amazon Purchase Order Number	
+	"title":"",
+	"cost":0.00,
+	"units_confirmed":0,					//origianl quantity confirmed
+	"earliest_ship_date":"", 				//date
+	"latest_ship_date":"", 					//date
+	"expected_ship_date":"", 				//date
+	"availablity_status":"",
+	"vendor_code":"",						
+	"fulfillment_center":"",				//amzon fulfillment center code
+	"order_date":"", 						//date 
+}
+
+
+
+
+
+
+//------------------------------------------Boxes------------------------------------
+
+{
+	"id":"", 					//unique id
+	"amazon_po":"",				//amazon Purchase Order Number	
+	"session_id":"",			//identifies a group of boxes being picked togther
+	"box_number":"",			//count of boxes per order number for a session
+	"created_date": null,		//"", //date	"session_complete" :false,	
+	
+	"box_contents":[			//list of items inside the box
+		{
+			"order_line_id":"",	//Order Line ID						
+			"asin":"",			//amazon product identifier								
+			"units":"",			//total number of units of asin in box								
+		}
+	]
+}
+

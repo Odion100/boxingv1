@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" ng-controller="navBarCtrl">
+	<head>
+		<!-- <link rel="stylesheet" type="text/css" href="boxing/styling/box-picker-styling.css"> -->
+		<link rel="stylesheet" type="text/css" href="styling/tbl_styling.css">
+		<link rel="stylesheet" type="text/css" href="styling/main.css">
+		
+		<link rel="stylesheet" type="text/css" href="styling/semantic-ui-icon/icon.css">
+
+		<link rel="stylesheet" type="text/css" href="bower_components/angular-resizable/angular-resizable.min.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css"/>
+		<link rel="icon" type="image/png" href="images/logo mongo.png" sizes="20x20" />
+		<title>{{navBar.currentView}}</title>
+	</head>
+
+	<body>
+		<div class="nav-section outer-section">
+			<div id="nav-btn-container">
+				<div class="nav-btn btn">
+					<a href="#ordersCentral" class="on-page-{{navBar.currentView === 'OrdersCentral'}}">OrdersCentral</a>
+				</div>
+				<div class="nav-btn btn">
+					<a href="#receiptsCentral" class="on-page-{{navBar.currentView === 'ReceiptsCentral'}}">ReceiptsCentral</a>
+				</div>
+				<!-- <div class="nav-btn btn">
+					<a href="#workCentral" class="on-page-{{navBar.currentView === 'WorkCentral'}}" style="text-decoration: line-through;">WorkCentral</a>
+				</div> -->
+				<div class="nav-btn btn">
+					<a href="#boxesCentral" class="on-page-{{navBar.currentView === 'BoxesCentral'}}">BoxesCentral</a>
+				</div>
+				<div class="nav-btn btn">
+					<a href="#productsCentral" class="on-page-{{navBar.currentView === 'ProductsCentral'}}">ProductsCentral</a>		
+				</div>
+				<div class="nav-btn btn">
+					<a href="#reportsCentral" class="on-page-{{navBar.currentView === 'ReportsCentral'}}">ReportsCentral</a>		
+				</div>
+			</div>
+			<div style="margin: 0 91px 0 0;">
+				<div style="position:relative;display: inline-block;">
+					<label>
+						<span>User Name: </span>
+						<input class="txb" type="text" name="" ng-model="printerSettings.printers.sheetPrinter.name">
+						<i class="checkmark icon exists-{{printerSettings.printers.sheetPrinter.exists && printerSettings.printers.sheetPrinter.name === printerSettings._printers.sheetPrinter.name}}"></i>
+					</label>					
+				</div>		
+				<button class="button">Login</button>		
+			</div>
+		</div>
+		<div ui-view></div>
+	</body>
+
+	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="ui-router.js"></script>
+	<script type="text/javascript" src="app-config.js"></script>
+    
+    <!-- View Controllers -->
+    <script type="text/javascript" src="controllers/ordersCentral.js"></script>
+    <script type="text/javascript" src="controllers/receiptsCentral.js"></script>
+	<script type="text/javascript" src="controllers/workCentral.js"></script>
+	<script type="text/javascript" src="controllers/boxesCentral.js"></script>
+	<script type="text/javascript" src="controllers/productsCentral.js"></script>
+	<script type="text/javascript" src="controllers/reportsCentral.js"></script>
+	
+    <!-- Helper Services & Directives -->
+    <script type="text/javascript" src="controllers/tbl.js"></script>
+	<script type="text/javascript" src="controllers/$$msgbox.js"></script>
+	<script type="text/javascript" src="controllers/tasks.js"></script>
+	<script type="text/javascript" src="controllers/$$OPS.js"></script>
+	<script type="text/javascript" src="controllers/_client.js"></script>
+	
+
+	<script type="text/javascript" src="controllers/ng-infinite-scroll.js"></script>
+	<script type="text/javascript" src="bower_components/moment/moment.js"></script>
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-date/dist/date.js"></script>
+	<script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+	<script type="text/javascript" src="bower_components/accounting/accounting.min.js"></script>
+	<script type="text/javascript" src="bower_components/angular-resizable/angular-resizable.min.js"></script>
+</html>

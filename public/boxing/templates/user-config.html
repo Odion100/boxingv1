@@ -1,0 +1,77 @@
+<div id="main">
+	<msgbox></msgbox>
+	<div class="user-input">
+		<label>
+			<span>Username:</span>
+			<input class="user-data txb" type="text" ng-model="userManager.newUser.username" style="margin: 0 14px;">
+		</label>
+		<label>
+			<span>User Type:</span>
+			<input class="user-data txb" type="text" ng-model="userManager.newUser.user_type" style="margin: 0 14px;">
+		</label>
+		<label>
+			<span>Access Level:</span>
+			<input class="user-data txb" type="number" ng-model="userManager.newUser.access_level" style="margin: 0 14px;">
+		</label>
+		<button class="button" ng-click="userManager.addUser()">Add User</button>
+	</div>
+
+
+
+	<div class="tbl" style="height: 354px; margin:0 8px; position: relative;width: 949px;">
+		<div class="tbl-head">
+			<table class="tbl-rec-flat" cellspacing="1">
+				<tbody>
+					<tr>
+						<td style="background: wheat;">							
+							<div ng-repeat="header in userTable.headers"><span>{{header.fieldName}}</span></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>			
+		<div class="tbl-scrollable" style="max-height:max-height: 275px;">
+			
+			<table class="tbl-rec-flat" cellspacing="1">				
+				<tr ng-repeat="user in userTable.data" >
+					<td class="line-item selected-{{user.selected}}">					                                             
+                        <div ng-repeat="header in userTable.headers">
+                        	<span ng-bind-html="header.processData(user[header.pName], user) | $$unsafe"></span>
+                        </div>   
+                        <i class="remove icon user-config btn" ng-click="userManager.removeUser(user)"></i>
+					</td>												
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<style type="text/css">
+	input.user-data.txb {
+	    width: initial;
+	}	
+	.user-input {
+	    margin: 19px 31px;
+	    display: inline-block;
+	}
+
+	table.tbl-rec-flat td div {
+	    width: 30%;
+	}
+	table.tbl-rec-flat td.line-item div {
+	    font-weight: 500;
+    	font-size: 17px;
+	}
+
+	i.remove.icon.user-config:hover {
+	    color: #d05856;
+	}
+
+	
+	i.remove.icon.user-config {
+	    float: right;
+	    width: 26px;
+    	height: 26px;
+    	color: #797979;
+	}
+</style>

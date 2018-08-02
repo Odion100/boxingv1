@@ -1,0 +1,64 @@
+<div id="combo-menu" ng-init="show = false">
+	<div class="combo-picker" ng-repeat="comboFilter in tbl.comboFilters">
+		<label>
+			<span>{{comboFilter.caption}}</span>
+			<select class="txb ui fluid search dropdown" ng-model="comboFilter.value">				
+			</select>
+			<div ng-click="show = !show" class="fake-select btn" style="width: 198px;height: 24px;display: inline-block;position: absolute;top: 3px;left: 88px;"></div>	
+		</label>	
+		<div style="left:0;position: fixed;" class="overlay" ng-show="show" style="z-index: 99;"  ng-click="show = !show"></div>
+		<div ng-show="show" class="popup-menu tbl-scrollable" style="width: 199px;padding: 0px 0 0 0;right: 115px;max-height: 706px;" style="    z-index: 100;">
+			<div class="option btn" ng-click="comboFilter.selectAll = !comboFilter.selectAll; comboFilter.selectAllClick(comboFilter)">
+				<span ng-show="!comboFilter.selectAll">Select All</span>
+				<span ng-show="comboFilter.selectAll">Unselect All</span>
+				<input style="float: right;" type="checkbox" name="" ng-model="comboFilter.selectAll">	
+			</div>
+			<div ng-repeat="option in comboFilter.options" class="option btn" ng-click="option.selected= !option.selected">
+				<span>{{option.caption}}</span>
+				<input style="float: right;" type="checkbox" name="" ng-model="option.selected">	
+			</div>
+		</div>
+	</div>
+	
+	<button class="button" ng-click="tbl.toggleMenuOptions(tbl.comboMenu)">
+		<i class="caret down icon"></i>
+		<i class="{{tbl.comboMenu.icon}}"></i>						
+	</button>
+	<div class="popup-menu" ng-show="tbl.comboMenu.showOptions">
+		
+		<div ng-repeat="option in tbl.comboMenu.options" class="option btn file-input" ng-click="option.clickAction()">
+			<span>{{option.caption}}</span> 
+			<i class="{{::option.icon}}" ng-show="option.icon" style="float: right;"></i>			
+			<i class="icons {{::option.iconCombo.class}}" ng-show="option.iconCombo" style="float: right;">
+			  	<i class="{{::option.iconCombo.icon1}} icon1"></i>
+			  	<i class="{{::option.iconCombo.icon2}} icon2"></i>
+			</i>
+			<input class="file-input" type="file" name={{::option.name}} onchange="angular.element(this).scope().tbl.uploadFile(this)" ng-show="option.type === 'file'">					
+		</div>
+
+		<!-- <div class="option btn" ng-click="tbl.closeAllSessions()">
+			<span>Close All Sessions</span>
+			<i class="icons" style="float: right;">
+				<i class="cube icon" style="font-size: 17px;margin: 3px 1px;color: #135271;"></i>
+				<i class="lock icon corner" style="font-size: 11px;"></i>
+			</i>
+		</div> -->
+	</div>
+</div>
+
+<style type="text/css">
+	div.combo-picker{
+		display: inline-block;
+	}
+
+	div#combo-menu{
+		border-left: 1px solid #b7b3b3;
+	    border-right: 1px solid #b7b3b3;
+	    padding:0 17px;
+	    margin-right: 27px;		
+	}
+	div#combo-menu .popup-menu {
+		right: 82px;
+	}	 
+
+</style>
