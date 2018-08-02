@@ -1,7 +1,7 @@
 # boxingv1
 Everready Boxing V1
 
-serve.js is the entery point for server
+server.js is the entery point for server
 
 the app is launched by running node server
 
